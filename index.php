@@ -19,7 +19,22 @@
     <?php
     
       $rootfolder= $_SERVER['DOCUMENT_ROOT']; 
+    
+    echo($_REQUEST["load"]);
    
+    
+    $date= date("Y-m-d");
+    $today=$date;
+    
+      // index.php?load=
+    $date= date("Y-m-d", strtotime(' -1 day'));
+ $yesterday=$date;
+ 
+  $date= date("Y-m-d", strtotime(' +1 day'));
+             $tomorrow=$date;
+             
+              $date= date("Y-m");
+    $month=$date;
     
      include($rootfolder."/Britadmin/navbar/index_navbar.php"); ?>
    
@@ -35,7 +50,7 @@
 					<ul class="nav nav-tabs ">
             	<li>
 
-                  <a href="#tab_default_1" data-toggle="tab">
+                  <a href="index.php?load=today" data-toggle="tab">
                   Yesterday Bookings</a>
 
                   
