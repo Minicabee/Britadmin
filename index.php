@@ -23,18 +23,56 @@
     echo($_REQUEST["load"]);
    
     
-    $date= date("Y-m-d");
-    $today=$date;
+    $today= date("Y-m-d");
+  
     
       // index.php?load=
-    $date= date("Y-m-d", strtotime(' -1 day'));
- $yesterday=$date;
+    $yesterday= date("Y-m-d", strtotime(' -1 day'));
  
-  $date= date("Y-m-d", strtotime(' +1 day'));
-             $tomorrow=$date;
+ 
+  $tomorrow= date("Y-m-d", strtotime(' +1 day'));
+       
              
-              $date= date("Y-m");
-    $month=$date;
+              $month= date("Y-m-d", strtotime(' +30 day'));
+    
+    if($_REQUEST["load"]=="today")
+    {
+        $query="SELECT * from register WHERE dt = ".$today." ORDER BY time ASC";
+          $result= mysqli_query($conn,$query);
+    }
+    if($_REQUEST["load"]=="yesterday")
+    {
+        $query="SELECT * from register WHERE dt = ".$yesterday." ORDER BY time ASC";
+          $result= mysqli_query($conn,$query);
+    }
+    if($_REQUEST["load"]=="tomorrow")
+    {
+        $query="SELECT * from register WHERE dt = ".$tomorrow." ORDER BY time ASC";
+          $result= mysqli_query($conn,$query);
+    }
+    if($_REQUEST["load"]=="month")
+    {
+        $query="SELECT * from register WHERE dt >= ".$today." AND dt <= ".$month." ORDER BY time ASC";
+          $result= mysqli_query($conn,$query); 
+    }
+      if($_REQUEST["load"]=="mysearch")
+    {
+        
+    }
+    
+    $query1="SELECT * from driver WHERE 1";
+      $result_drv= mysqli_query($conn,$query1); 
+    
+    $driverinfo="";
+     
+     while ($row_drv= mysqli_fetch_array($result_drv,MYSQLI_ASSOC))
+     {
+         $temp=$row_drv[""];
+         $driverinfo[$temp]=
+         
+     }
+   
+    include($rootfolder."/Britadmin/connection/connect.php"); 
     
      include($rootfolder."/Britadmin/navbar/index_navbar.php"); ?>
    
@@ -50,21 +88,21 @@
 					<ul class="nav nav-tabs ">
             	<li>
 
-                  <a href="index.php?load=today" data-toggle="tab">
+                  <a href="<?php echo("index.php?load=today") ?>" >
                   Yesterday Bookings</a>
 
                   
                 </li>
 						<li class="active">
-							<a href="#tab_default_2" data-toggle="tab">
+							<a href="<?php echo("index.php?load=yesterday") ?>">
 							Today Bookings</a>
 						</li>
 						<li>
-							<a href="#tab_default_3" data-toggle="tab">
+							<a href="<?php echo("index.php?load=tomorrow") ?>">
 							Tomorrow Bookings</a>
 						</li>
 					 <li>
-                <a href="#tab_default_4" data-toggle="tab">
+                <a href="<?php echo("index.php?load=month") ?>">
                 Future Bookings</a>
               </li>
 					</ul>
@@ -87,301 +125,49 @@
                         <th style="width:5%;">Action</th>
                       </thead>
                       <tbody id="myTable">
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
+                     
+                    <?php
+    
+     while ($row= mysqli_fetch_array($result,MYSQLI_ASSOC))
+     {
+         
+         $refid=$row["refid"];
+                    $pname=$row["name"];
+     $number1=$row["num1"];
+      $number2=$row["num2"];
+     $src=$row["src"];
+     $des=$row["des"];
+     $tm=$row["time"];
+         
+    $book_date=$row["dt"];
+         
+     $status=$row["status"];
+     $fare=$row["fare"];
+      $np=$row["passenger"];
+       $nl=$row["luggage"];
+       $type=$row["type"];
+       $info=$row["info"];
+        $flight=$row["location"];
+        $email=$row["mail"];
+        $dfare=$row["dfare"];
+        $via=$row["via"];
+       
+       $pm=$row["pay"];
+       
+        $drvid=$row["drvid"];       
+                          ?>
+                          <tr>
+                          <td><?php echo($refid); ?></td>
+                          <td><?php echo($src); ?></td>
+                          <td><?php echo($des); ?></td>                     
+                          <td><?php echo($book_date." / ".$tm); ?></td>
+                          <td><?php echo($type); ?></td>
+                        <td>£ <?php echo($fare); ?></td>
                           <td><span style="color:#ffffff;background-color:green;font-weight:600;letter-spacing:0.5px;padding:5px;">Confirm</span></td>
                           <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
                         </tr>
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:rgb(23, 23, 255);font-weight:600;letter-spacing:0.5px;padding:5px;">Booked</span></td>
-                          <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                        </tr>
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:red;font-weight:600;letter-spacing:0.5px;padding:5px;">Bidded</span></td>
-                          <td><button class="btn btn-default">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>BRT1234</td>
-                            <td>Gatwick Airport South Terminal</td>
-                            <td>Heathrow Airport Terminal 5</td>
-                            <td>2018-11-15 19:20:00</td>
-                            <td>SALOON CAR x 1</td>
-                            <td>£ 7.00</td>
-                            <td><span style="color:#ffffff;background-color:green;font-weight:600;letter-spacing:0.5px;padding:5px;">Confirm</span></td>
-                            <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                          </tr>
-                          <tr>
-                              <td>BRT1234</td>
-                              <td>Gatwick Airport South Terminal</td>
-                              <td>Heathrow Airport Terminal 5</td>
-                              <td>2018-11-15 19:20:00</td>
-                              <td>SALOON CAR x 1</td>
-                              <td>£ 7.00</td>
-                              <td><span style="color:#ffffff;background-color:green;font-weight:600;letter-spacing:0.5px;padding:5px;">Confirm</span></td>
-                              <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                            </tr>
-                          </tbody>       </table>
-                  </div>
-  </div>
-						<div class="tab-pane active" id="tab_default_2">
-                <div id="my_div">
-                  <div class="row">
-                    <div class="col-xs-9">
-          <input type="text" id="myInput" class="controls" onkeyup="myFunction()" placeholder="Search for Bookings.." style="width:30%;margin-bottom:10px;" >
-        </div><div class="col-xs-3"><br>Showing 281 Records</div> </div>
-             <table >
-                      <thead class="header">
-                        <th style="width:5%;">Ref Id</th>
-                        <th style="width:20%;">Pickup From</th>
-                        <th style="width:20%;">Dropoff To</th>
-                        <th style="width:15%;">Date /Time</th>
-                        <th style="width:15%;">Cab Type</th>
-                        <th style="width:10%;">Total Fare</th>
-                        <th style="width:8%;">Status</th>
-                        <th style="width:5%;">Action</th>
-                      </thead>
-                      <tbody id="myTable">
-                           <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:rgb(23, 23, 255);font-weight:500;letter-spacing:0.5px;padding:5px;border-radius:4px;">Booked</span></td>
-                          <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                        </tr>
-                      <tr>
-                          <td>BRT1334</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:green;font-weight:500;letter-spacing:0.5px;padding:5px;border-radius:4px;">Confirm</span></td>
-                          <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                        </tr>
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:rgb(23, 23, 255);font-weight:500;letter-spacing:0.5px;padding:5px;border-radius:4px;">Booked</span></td>
-                          <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                        </tr>
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:red;font-weight:500;letter-spacing:0.5px;padding:5px;border-radius:4px;">Bidded</span></td>
-                          <td><button class="btn btn-default">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>BRT1234</td>
-                            <td>Gatwick Airport South Terminal</td>
-                            <td>Heathrow Airport Terminal 5</td>
-                            <td>2018-11-15 19:20:00</td>
-                            <td>SALOON CAR x 1</td>
-                            <td>£ 7.00</td>
-                            <td><span style="color:#ffffff;background-color:green;font-weight:500;letter-spacing:0.5px;padding:5px;border-radius:4px;">Confirm</span></td>
-                            <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                          </tr>
-                          <tr>
-                              <td>BRT1234</td>
-                              <td>Gatwick Airport South Terminal</td>
-                              <td>Heathrow Airport Terminal 5</td>
-                              <td>2018-11-15 19:20:00</td>
-                              <td>SALOON CAR x 1</td>
-                              <td>£ 7.00</td>
-                              <td><span style="color:#ffffff;background-color:green;font-weight:500;letter-spacing:0.5px;padding:5px;border-radius:4px;">Confirm</span></td>
-                              <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                            </tr>
-                          </tbody> </table>
-        </div>       
-            </div>
-            <div class="tab-pane" id="tab_default_3">
-                <div id="tmrw">
-                    <div class="row">
-                        <div class="col-xs-9">
-             <input type="text" id="myInput" class="controls" onkeyup="myFunction()" placeholder="Search for Bookings.." style="width:30%;margin-bottom:10px;" >
-            </div><div class="col-xs-3"><br>Showing 281 Records</div> </div>
-            
-                    <table >
-                      <thead class="header">
-                        <th style="width:5%;">Ref Id</th>
-                        <th style="width:20%;">Pickup From</th>
-                        <th style="width:20%;">Dropoff To</th>
-                        <th style="width:15%;">Date /Time</th>
-                        <th style="width:15%;">Cab Type</th>
-                        <th style="width:10%;">Total Fare</th>
-                        <th style="width:10%;">Status</th>
-                        <th style="width:5%;">Action</th>
-                      </thead>
-                      <tbody id="myTable">
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:red;font-weight:500;letter-spacing:0.5px;padding:5px;border-radius:4px;">Bidded</span></td>
-                          <td><button class="btn btn-default">Edit</button></td>
-                        </tr>
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:green;font-weight:600;letter-spacing:0.5px;padding:5px;">Confirm</span></td>
-                          <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                        </tr>
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:rgb(23, 23, 255);font-weight:600;letter-spacing:0.5px;padding:5px;">Booked</span></td>
-                          <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                        </tr>
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:red;font-weight:600;letter-spacing:0.5px;padding:5px;">Bidded</span></td>
-                          <td><button class="btn btn-default">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>BRT1234</td>
-                            <td>Gatwick Airport South Terminal</td>
-                            <td>Heathrow Airport Terminal 5</td>
-                            <td>2018-11-15 19:20:00</td>
-                            <td>SALOON CAR x 1</td>
-                            <td>£ 7.00</td>
-                            <td><span style="color:#ffffff;background-color:green;font-weight:600;letter-spacing:0.5px;padding:5px;">Confirm</span></td>
-                            <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                          </tr>
-                          <tr>
-                              <td>BRT1234</td>
-                              <td>Gatwick Airport South Terminal</td>
-                              <td>Heathrow Airport Terminal 5</td>
-                              <td>2018-11-15 19:20:00</td>
-                              <td>SALOON CAR x 1</td>
-                              <td>£ 7.00</td>
-                              <td><span style="color:#ffffff;background-color:green;font-weight:600;letter-spacing:0.5px;padding:5px;">Confirm</span></td>
-                              <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                            </tr>
-                          </tbody>  </table>
-         </div>       
-              
-</div>
-            <div class="tab-pane" id="tab_default_4">
-                <div id="month">
-                    <div class="row">
-                        <div class="col-xs-9">
-            <input type="text" id="myInput" class="controls" onkeyup="myFunction()" placeholder="Search for Bookings.." style="width:30%;margin-bottom:10px;" >
-            </div><div class="col-xs-3"><br>Showing 281 Records</div> </div>
-                    <table >
-                      <thead class="header">
-                        <th style="width:5%;">Ref Id</th>
-                        <th style="width:20%;">Pickup From</th>
-                        <th style="width:20%;">Dropoff To</th>
-                        <th style="width:15%;">Date /Time</th>
-                        <th style="width:15%;">Cab Type</th>
-                        <th style="width:10%;">Total Fare</th>
-                        <th style="width:10%;">Status</th>
-                        <th style="width:5%;">Action</th>
-                      </thead>
-                      <tbody id="myTable">
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:green;font-weight:600;letter-spacing:0.5px;padding:5px;">Confirm</span></td>
-                          <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                        </tr>
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:rgb(23, 23, 255);font-weight:600;letter-spacing:0.5px;padding:5px;">Booked</span></td>
-                          <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                        </tr>
-                      <tr>
-                          <td>BRT1234</td>
-                          <td>Gatwick Airport South Terminal</td>
-                          <td>Heathrow Airport Terminal 5</td>
-                          <td>2018-11-15 19:20:00</td>
-                          <td>SALOON CAR x 1</td>
-                          <td>£ 7.00</td>
-                          <td><span style="color:#ffffff;background-color:red;font-weight:600;letter-spacing:0.5px;padding:5px;">Bidded</span></td>
-                          <td><button class="btn btn-default">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>BRT1234</td>
-                            <td>Gatwick Airport South Terminal</td>
-                            <td>Heathrow Airport Terminal 5</td>
-                            <td>2018-11-15 19:20:00</td>
-                            <td>SALOON CAR x 1</td>
-                            <td>£ 7.00</td>
-                            <td><span style="color:#ffffff;background-color:green;font-weight:600;letter-spacing:0.5px;padding:5px;">Confirm</span></td>
-                            <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                          </tr>
-                          <tr>
-                              <td>BRT1234</td>
-                              <td>Gatwick Airport South Terminal</td>
-                              <td>Heathrow Airport Terminal 5</td>
-                              <td>2018-11-15 19:20:00</td>
-                              <td>SALOON CAR x 1</td>
-                              <td>£ 7.00</td>
-                              <td><span style="color:#ffffff;background-color:green;font-weight:600;letter-spacing:0.5px;padding:5px;">Confirm</span></td>
-                              <td><button data-toggle="modal" data-target="#myModal2" class="btn btn-default">Edit</button></td>
-                            </tr>
-                          </tbody>       </table>
-         </div>       
-              
-</div>
-					</div>
-
-
-<!--right modal-content starts here-->
-
-  <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+                          
+                       <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
   
@@ -395,56 +181,56 @@
                   <tbody>
                     <tr>
                       <td class="first">Passenger Name :</td>
-                      <td class="first"><input typ="text" class="text" value="Amila Johnson"></td>
+                      <td class="first"><input type="text" class="text" value="<?php echo($pname); ?>"></td>
                     </tr>
                     <tr>
                       <td>Passenger Email :</td>
-                      <td><input typ="text" class="text" value="amilajohnson@yahoo.co.in"></td>
+                      <td><input type="text" class="text" value="<?php echo($email); ?>"></td>
                     </tr>
                     <tr>
                       <td>Passenger Contact :</td>
-                      <td><input typ="text" class="text" value="+44 7344546748"></td>
+                      <td><input type="text" class="text" value="<?php echo($number1." / ".$number2); ?>"></td>
                     </tr>
     
                            <tr>
                       <td>Pickup From :</td>
-                      <td><input typ="text" class="text" value="Gatwick Airport North Terminal Approach"></td>
+                      <td><input type="text" class="text" value="<?php echo($src); ?>"></td>
                     </tr>
                       <tr>
                       <td>Dropoff To : </td>
-                      <td><input typ="text" class="text" value="Heathrow Airport Termial 5"></td>
+                      <td><input type="text" class="text" value="<?php echo($des); ?>"></td>
                     </tr>
                     <tr>
                       <td>Pickup Date & Time :</td>
-                      <td><input typ="text" class="text" value="13.10.2028 23:40"></td>
+                      <td><input type="text" class="text" value="<?php echo($book_date." / ".$tm); ?>"></td>
                     </tr>
                     <tr>
-                        <td>Passengers :</td>
-                        <td><input typ="text" class="text" value="2"></td>
+                        <td>Passengers :</td> $
+                        <td><input type="text" class="text" value="<?php echo($np); ?>"></td>
                       </tr>
                       <tr>
                           <td>Luggages :</td>
-                          <td><input typ="text" class="text" value="2"></td>
+                          <td><input type="text" class="text" value="<?php echo($nl); ?>"></td>
                         </tr>
                     <tr>
-                      <td>Cab Type :</td>
-                      <td><input typ="text" class="text" value="Saloon x 1"></td>
+                      <td>Cab typee :</td> 
+                      <td><input type="text" class="text" value="<?php echo($type); ?>" ></td>
                     </tr>
                     <tr>
                         <td>Total Fare :</td>
-                        <td><input typ="text" class="text" value="£41"></td>
+                        <td><input type="text" class="text" value="£<?php echo($fare); ?>"></td>
                       </tr>
                       <tr>
                           <td>Driver Least Bid :</td>
-                          <td><input typ="text" class="text" value="£32"></td>
+                          <td><input type="text" class="text" value="£<?php echo($fare); ?>"></td>
                         </tr>
                       <tr>
                           <td>Booked On :</td>
-                          <td><input typ="text" class="text" value="10-10-2018 12:30"></td>
+                          <td><input type="text" class="text" value="<?php echo("booked date"); ?>"></td>
                         </tr>
                         <tr>
                             <td>Booking Status :</td>
-                            <td>Booked cab not yet Alloted</td>
+                            <td><?php echo("Booking Status"); ?></td>
                           </tr>
                           <tr>
                               <td>Driver Name :</td>
@@ -531,7 +317,25 @@
               
         </div><!-- modal-content -->
       </div><!-- modal-dialog -->
-      </div><!-- modal --></div></div>
+      </div><!-- modal --></div>
+               
+     <?php
+         
+     }
+         ?>
+                          
+                          
+                    
+                          </tbody>       </table>
+                  </div>
+  </div>
+					
+					</div>
+
+
+<!--right modal-content starts here-->
+
+               </div>
     
     </div>
     
