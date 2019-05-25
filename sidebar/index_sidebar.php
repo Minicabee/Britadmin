@@ -1,4 +1,3 @@
-<?php
 
 <nav class="navbar-primary">
   
@@ -35,5 +34,3 @@
     </li>
     </ul>
 </nav>
-
-?>

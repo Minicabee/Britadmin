@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en" id="html">
 <head>
@@ -12,65 +14,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-   <a href="#" class="btn-expand-collapse"><i class="fa fa-bars"></i></a>
-      <a class="navbar-brand" id="brandname" href="#"><span>Minicabee</span> Travel Solutions</a>
-    </div>
-    <div class="collapse navbar-collapse " id="myNavbar">
-      <div class="nav navbar-nav padleft">
-       <div class="row">
-<div class="col-md-12">
-  </div>
-       </div>
-    </div>
-       
-      <ul class="nav navbar-nav navbar-right navextra" >
-            <li><a data-toggle="tooltip" data-placement="bottom" title="Notification" href="#"><span class="fa fa-bell"></span> Notification</a></li>
-          <li><a data-toggle="tooltip" data-placement="bottom" title="Notification" href="#"><i class="fa fa-credit-card"></i> Payment Link</a></li>
-        <li><a data-toggle="tooltip" data-placement="bottom" title="Settings" href="#"><span class="fa fa-gear"></span> Settings</a></li>
-        <li><a data-toggle="tooltip" data-placement="bottom" title="Logout" href="#"><span class="fa fa-power-off"></span> Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<nav class="navbar-primary">
-  
-  <ul class="navbar-primary-menu">
-    <li>
-      <a href="index.html">Dashboard</a>
-     <a href="bookrecord.html">Booking Records</a>
-        <a href="passrecord.html">Passenger Records</a>
-        <a class="dropdown-btn">Company Management <i class="fa fa-caret-down"></i></a>
-              <div class="dropdown-container">
-                  <a href="bookanal.html">Booking Analytics</a>
-                <a href="staffacc.html">Staff Accounts</a>
-                <a href="prolist.html">Provider List</a>
-                <a href="cprofit.html">Company Profit</a>
-                <a href="fchange.html">Fare Changer</a>
-              </div>
-         <a class="dropdown-btn"> Drivers Management<i class="fa fa-caret-down"></i></a>
-              <div class="dropdown-container">
-                  <a href="dlist.html">Driver List</a>
-                <a href="adriver.html">Add Driver</a>
-                <a href="danalytics.html">Driver Analytics</a>
-                <a href="payments.html">Payments</a>
-                <a href="crecords.html">Council Records</a>
-              </div>
-       <a href="bquote.html">Booking Quote</a>
-              <a href="qrecords.html">Quote Records</a>
-        <a href="bsms.html">Booking SMS</a>
-        <a href="webupload.html">website Uploads</a>
-        <a href="track.html">Live Tracking</a>
-        <a href="chat.html">Chatting Panel</a>
-        <a href="quick.html">Quick Metrics</a>
-        <a href="settings.html"><i class="fa fa-gear"></i> Settings</a>
 
-    </li>
-    </ul>
-</nav>
-
+    
+    <?php
+    
+      $rootfolder= $_SERVER['DOCUMENT_ROOT']; 
+   
+    
+     include($rootfolder."/Britadmin/navbar/index_navbar.php"); ?>
+   
+ 
+<?php  include($rootfolder."/Britadmin/sidebar/index_sidebar.php"); ?>
  
     <div class="main-content">
            <div class="container1">
@@ -80,8 +34,11 @@
     	<div class="tabbable-line">
 					<ul class="nav nav-tabs ">
             	<li>
+
                   <a href="#tab_default_1" data-toggle="tab">
                   Yesterday Bookings</a>
+
+                  
                 </li>
 						<li class="active">
 							<a href="#tab_default_2" data-toggle="tab">

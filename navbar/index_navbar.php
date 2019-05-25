@@ -1,4 +1,4 @@
-<?php
+
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -18,9 +18,8 @@
           <li><a data-toggle="tooltip" data-placement="bottom" title="Notification" href="#"><i class="fa fa-credit-card"></i> Payment Link</a></li>
         <li><a data-toggle="tooltip" data-placement="bottom" title="Settings" href="#"><span class="fa fa-gear"></span> Settings</a></li>
         <li><a data-toggle="tooltip" data-placement="bottom" title="Logout" href="#"><span class="fa fa-power-off"></span> Logout</a></li>
+         
       </ul>
     </div>
   </div>
 </nav>
-
-?>
